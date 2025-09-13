@@ -1,13 +1,6 @@
-# Databricks notebook source
-# MAGIC %md
-# MAGIC # **DLT Pipeline**
+#DLT Pipeline
 
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC Import and expectations
-
-# COMMAND ----------
+#Import and expectations
 
 import dlt
 from pyspark.sql.functions import *
@@ -18,12 +11,7 @@ my_rules={
     "rule2":"product_name IS NOT NULL"
 }
 
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC **Streaming table**
-
-# COMMAND ----------
+#Streaming table
 
 @dlt.table()
 
@@ -34,24 +22,14 @@ def dimproducts_stage():
     )
 
 
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC **Streaming view**
-
-# COMMAND ----------
+#Streaming view
 
 @dlt.view()
 def DimProducts_view():
     df = spark.readStream.table("LIVE.DimProducts_stage")
     return df
 
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC **DimProducts**
-
-# COMMAND ----------
+#DimProducts
 
 dlt.create_streaming_table("DimProducts")
 
